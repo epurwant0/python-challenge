@@ -7,7 +7,7 @@ hwPath = "PyPoll/Resources"
 csvPath = os.path.join(mainPath, hwPath, "election_data.csv")
 
 totalVotes = 0
-candids = dict()
+candidates = dict()
 totalVArr = []
 candArr = []
 
@@ -27,15 +27,36 @@ with open(csvPath, newline = "") as electionCSV:
 
     for row in electReader:
         totalVotes = totalVotes + 1
-        checkKey(candids, row[2])
+        checkKey(candidates, row[2])
     
     print(f"Total Votes: {totalVotes}")
+    tv = f"Total Votes: {totalVotes}"
     
-    for key in candids:
-        percent = "{:.0%}".format(candids[key]/totalVotes)
-        totalVArr.append(candids[key])
+    for key in candidates:
+        percent = "{:.0%}".format(candidates[key]/totalVotes)
+        totalVArr.append(candidates[key])
         candArr.append(key)
         maxVotes = max(totalVArr)
-        print(f"{key}: {percent} ({candids[key]})")
+        print(f"{key}: {percent} ({candidates[key]})")
 
     print(f"Winner: {candArr[totalVArr.index(max(totalVArr))]} ({maxVotes})")
+    wn = f"Winner: {candArr[totalVArr.index(max(totalVArr))]} ({maxVotes})"
+
+    # save the output file path
+output_file = os.path.join("/Users/ellis/Desktop/Misc/Homework_Submitted/3_Python/python-challenge/PyPoll/Analysis/output_file.txt")
+
+# open the output file
+with open(output_file, 'w') as result:
+    result.writelines("Election Results \n")
+    result.writelines("-----------------------------\n")
+    result.writelines(f"{tv}\n")
+    result.writelines("-----------------------------\n")
+
+    for key in candidates:
+        percent = "{:.0%}".format(candidates[key]/totalVotes)
+        vp = f"{key}: {percent} ({candidates[key]}"
+        result.writelines(f"{vp}\n")
+    
+    result.writelines("-----------------------------\n")
+    result.writelines(f"{wn}\n")
+    result.writelines("-----------------------------\n")

@@ -19,6 +19,7 @@ datesArr = []
 with open(csvPath, newline = "") as budgetCSV:
     
     budgetReader = csv.reader(budgetCSV, delimiter = ",")
+    
     #print(list(budgetReader)[1][1]) // 867884
 
     budgetHeader = next(budgetReader)
@@ -39,10 +40,28 @@ with open(csvPath, newline = "") as budgetCSV:
     avgChange = sum(avgPLArr) / len(avgPLArr)
     avgChange = round(avgChange, 2)
 
-    print (f"Total Months: {totalMonths}")
-    print (f"Total Net: ${netTotal}")
-    print(f"Average Change: ${avgChange}")
-    print (f"Greatest Increase: {datesArr[avgPLArr.index(max(avgPLArr)) + 1]} ${max(avgPLArr)}")
-    print (f"Greatest Decrease: {datesArr[avgPLArr.index(min(avgPLArr)) + 1]} ${min(avgPLArr)}")
-    
+    tm = f"Total Months: {totalMonths}"
+    tn = f"Total Net: ${netTotal}"
+    ac = f"Average Change: ${avgChange}"
+    gi = f"Greatest Increase: {datesArr[avgPLArr.index(max(avgPLArr)) + 1]} ${max(avgPLArr)}"
+    gd = f"Greatest Decrease: {datesArr[avgPLArr.index(min(avgPLArr)) + 1]} ${min(avgPLArr)}"
+
+    print (tm)
+    print (tn)
+    print (ac)
+    print (gi)
+    print (gd)
+
+    # save the output file path
+output_file = os.path.join("/Users/ellis/Desktop/Misc/Homework_Submitted/3_Python/python-challenge/PyBank/Analysis/output_file.txt")
+
+    # open the output file
+with open(output_file, 'w') as result:
+    result.writelines("Financial Analysis\n")
+    result.writelines("-----------------------------\n")
+    result.writelines(f"{tm}\n")
+    result.writelines(f"{tn}\n")
+    result.writelines(f"{ac}\n")
+    result.writelines(f"{gi}\n")
+    result.writelines(f"{gd}\n")
 
